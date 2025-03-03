@@ -3,158 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Pop Culture</title>
+    <title>Quiz Magico ✨</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
+            font-family: 'Marcellus', serif;
+            background: url('https://source.unsplash.com/1600x900/?galaxy,nebula') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             text-align: center;
             padding: 20px;
         }
+
+        .quiz-container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
         .question-container {
             margin: 20px auto;
             padding: 15px;
-            background: #333;
+            background: rgba(50, 50, 100, 0.8);
             border-radius: 10px;
-            width: 80%;
-            max-width: 600px;
+            box-shadow: 0 0 15px rgba(100, 100, 255, 0.6);
+            transition: 0.5s;
         }
+
         .answers button {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 80%;
             margin: 10px auto;
-            padding: 10px;
+            padding: 12px;
             font-size: 18px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            background: #555;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
             color: white;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.8);
+            transition: all 0.3s ease-in-out;
             position: relative;
         }
+
         .answers button:hover {
-            background: #777;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(106, 17, 203, 1);
         }
+
+        .hint-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
         .hint {
             display: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
             position: absolute;
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #000;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 12px;
+            font-size: 14px;
             white-space: nowrap;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         }
-        .answers button:hover .hint {
-            display: block;
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Quiz Pop Culture</h1>
-    <div id="quiz"></div>
+    <h1>🌙 Quiz Magico ✨</h1>
+    <div class="quiz-container" id="quiz"></div>
 
-    <script>
-        const questions = JSON.parse([
-    { 
-        "brand": "Pokémon",
-        "question": "Quale starter di prima generazione scegli?",
-        "answers": [
-            { "text": "Bulbasaur 🌿", "hint": "Starter di tipo Erba/Veleno, perfetto per le prime palestre." },
-            { "text": "Charmander 🔥", "hint": "Starter di tipo Fuoco che diventa il potente Charizard." },
-            { "text": "Squirtle 🌊", "hint": "Starter di tipo Acqua, evolve in Blastoise con cannoni d'acqua." }
-        ]
-    },
-    { 
-        "brand": "Harry Potter",
-        "question": "A quale casata appartieni?",
-        "answers": [
-            { "text": "Grifondoro 🦁", "hint": "Coraggiosi e avventurosi, casa di Harry Potter." },
-            { "text": "Tassorosso 🦡", "hint": "Leali e lavoratori, casa di Cedric Diggory." },
-            { "text": "Corvonero 🦅", "hint": "Intelligenti e creativi, casa di Luna Lovegood." },
-            { "text": "Serpeverde 🐍", "hint": "Astuti e ambiziosi, casa di Voldemort." }
-        ]
-    },
-    { 
-        "brand": "Star Wars",
-        "question": "Sei un Jedi o un Sith?",
-        "answers": [
-            { "text": "Jedi ⚔️", "hint": "Guerrieri della luce, seguono la Forza per la pace." },
-            { "text": "Sith 🔥", "hint": "Seguono il lato oscuro della Forza, potenti e spietati." }
-        ]
-    },
-    { 
-        "brand": "Marvel vs DC",
-        "question": "Preferisci Marvel o DC?",
-        "answers": [
-            { "text": "Marvel 🦸‍♂️", "hint": "Casa di Spider-Man, Iron Man e Avengers." },
-            { "text": "DC 🦇", "hint": "Casa di Batman, Superman e Justice League." }
-        ]
-    },
-    { 
-        "brand": "Game of Thrones",
-        "question": "Quale casata di Westeros preferisci?",
-        "answers": [
-            { "text": "Stark 🐺", "hint": "Onorevoli e leali, governano il Nord." },
-            { "text": "Lannister 🦁", "hint": "Ricchi e potenti, 'Un Lannister paga sempre i suoi debiti'." },
-            { "text": "Targaryen 🐉", "hint": "Discendenti dei draghi, vogliono il Trono di Spade." },
-            { "text": "Baratheon 🦌", "hint": "Guerrieri forti e tenaci, casa di Re Robert." },
-            { "text": "Greyjoy 🦑", "hint": "Pirati delle Isole di Ferro, 'Ciò che è morto non muoia mai'." },
-            { "text": "Martell 🏜️", "hint": "Provenienti dal deserto di Dorne, non si sottomettono mai." },
-            { "text": "Tyrell 🌹", "hint": "Ricchi e influenti, 'Crescere Forti'." },
-            { "text": "Tully 🐟", "hint": "Governano le Terre dei Fiumi, 'Famiglia, Dovere, Onore'." },
-            { "text": "Arryn 🦅", "hint": "Protettori della Valle, 'Alto come l’Onore'." },
-            { "text": "Bolton ❄️", "hint": "Famosi per la crudeltà, governano Forte Terrore." }
-        ]
-    },
-    { 
-        "brand": "PlayStation vs Xbox",
-        "question": "PlayStation o Xbox?",
-        "answers": [
-            { "text": "PlayStation 🎮", "hint": "Casa di esclusive come God of War, The Last of Us." },
-            { "text": "Xbox 🕹️", "hint": "Famosa per Halo, Gears of War e Game Pass." }
-        ]
-    }
-]
-);
-
-        let currentQuestion = 0;
-        const quizContainer = document.getElementById("quiz");
-
-        function showQuestion() {
-            if (currentQuestion >= questions.length) {
-                quizContainer.innerHTML = "<h2>Quiz completato! 🎉</h2>";
-                return;
-            }
-
-            const q = questions[currentQuestion];
-            let html = `<div class="question-container">
-                <h2>${q.question}</h2>
-                <div class="answers">`;
-
-            q.answers.forEach(answer => {
-                html += `<button onClick="nextQuestion()">
-                    ${answer.text}
-                    <span class="hint">${answer.hint}</span>
-                </button>`;
-            });
-
-            html += `</div></div>`;
-            quizContainer.innerHTML = html;
-        }
-
-        function nextQuestion() {
-            currentQuestion++;
-            showQuestion();
-        }
-
-        showQuestion();
-    </script>
-
-</body>
-</html>
+    <
