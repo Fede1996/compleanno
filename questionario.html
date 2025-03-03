@@ -160,7 +160,6 @@
         ];
 
         let currentQuestion = 0;
-        const quizContainer = document.getElementById("quiz");
 
         function startQuiz() {
             const nome = document.getElementById("nome").value;
@@ -178,7 +177,7 @@
 
         function showQuestion() {
             if (currentQuestion >= questions.length) {
-                quizContainer.innerHTML = "<h2 class='fade-in'>✨ Quiz completato! Complimenti! 🎉</h2>";
+                document.getElementById("quiz").innerHTML = `<h2 class='fade-in'>✨ Quiz completato! Grazie, ${userData.nome}! 🎉</h2>`;
                 return;
             }
 
@@ -197,7 +196,7 @@
             });
 
             html += `</div></div>`;
-            quizContainer.innerHTML = html;
+            document.getElementById("quiz").innerHTML = html;
         }
 
         function nextQuestion() {
@@ -209,8 +208,6 @@
             const hint = document.getElementById(`hint-${index}`);
             hint.style.display = (hint.style.display === "block") ? "none" : "block";
         }
-
-        showQuestion();
     </script>
 
 </body>
