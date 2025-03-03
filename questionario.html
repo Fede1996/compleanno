@@ -277,6 +277,7 @@
     
             let yPosition = 80;  // Posizione iniziale per le risposte
             answers.forEach(answer => {
+                console.log(answer);
                 doc.text(`- ${answer['text']}`, 20, yPosition);
                 yPosition += 10;
             });
