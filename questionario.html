@@ -151,6 +151,20 @@
         let currentQuestion = 0;
         const quizContainer = document.getElementById("quiz");
 
+        function startQuiz() {
+            const nome = document.getElementById("nome").value;
+            const cognome = document.getElementById("cognome").value;
+            const email = document.getElementById("email").value;
+
+            if (!nome || !cognome || !email) {
+                alert("Per iniziare, inserisci tutti i dati!");
+                return;
+            }
+
+            userData = { nome, cognome, email };
+            showQuestion();
+        }
+
         function showQuestion() {
             if (currentQuestion >= questions.length) {
                 quizContainer.innerHTML = "<h2 class='fade-in'>✨ Quiz completato! Complimenti! 🎉</h2>";
