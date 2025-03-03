@@ -250,9 +250,7 @@
 
             document.getElementById("quiz").innerHTML = `
                 <h2>Grazie, ${userData.nome}! 🎉<br>I tuoi risultati sono pronti.</h2>
-                <a href="${url}" download="${userData.email.replace(/[@.]/g, "_")}.json">
-                    <button>📥 Scarica il tuo file</button>
-                </a>
+                <button id="downloadTicket" onclick="generateTicket()">Scarica il Biglietto di Invito 🎉</button>
             `;
         }
 
