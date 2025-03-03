@@ -255,6 +255,40 @@
                 </a>
             `;
         }
+
+        // Funzione per creare il biglietto di invito in PDF
+        function generateTicket() {
+            const { jsPDF } = window.jspdf; // Inizializza jsPDF
+    
+            // Crea il documento PDF
+            const doc = new jsPDF();
+            
+            // Aggiungi un titolo
+            doc.setFontSize(20);
+            doc.text("🎉 Invito al Compleanno di [Nome Compleanno] 🎉", 20, 20);
+
+            // Aggiungi il nome dell'utente e altre info
+            doc.setFontSize(16);
+            doc.text(`Nome: ${userData.nome}`, 20, 40);
+            doc.text(`Email: ${userData.email}`, 20, 50);
+    
+            // Aggiungi un piccolo sommario delle risposte al quiz
+            doc.text("Risposte al quiz:", 20, 70);
+            doc.setFontSize(12);
+    
+            let yPosition = 80;  // Posizione iniziale per le risposte
+            answers.forEach(answer => {
+                doc.text(`- ${answer}`, 20, yPosition);
+                yPosition += 10;
+            });
+
+            // Aggiungi un messaggio finale
+            doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition + 10);
+
+            // Salva il PDF come file scaricabile
+            doc.save(`biglietto_invito_${userData.nome}.pdf`);
+        }
+
     </script>
 
 </body>
