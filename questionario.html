@@ -40,8 +40,14 @@
             transition: 0.5s;
         }
 
+        .answers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .answers button {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             width: 80%;
@@ -87,10 +93,7 @@
             color: white;
             padding: 8px;
             border-radius: 8px;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 5px;
             font-size: 14px;
             white-space: nowrap;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
@@ -109,6 +112,88 @@
 <body>
 
     <h1>🌙 Quiz Magico ✨</h1>
-    <div class="quiz-container" id="quiz"></div>
+    <div class="quiz-container">
+        <div id="quiz"></div>
+    </div>
 
-    <
+    <script>
+        const questions = [
+            { 
+                "brand": "Pokémon",
+                "question": "Quale starter di prima generazione scegli?",
+                "answers": [
+                    { "text": "Bulbasaur 🌿", "hint": "Starter di tipo Erba/Veleno, perfetto per le prime palestre." },
+                    { "text": "Charmander 🔥", "hint": "Starter di tipo Fuoco che diventa il potente Charizard." },
+                    { "text": "Squirtle 🌊", "hint": "Starter di tipo Acqua, evolve in Blastoise con cannoni d'acqua." }
+                ]
+            },
+            { 
+                "brand": "Harry Potter",
+                "question": "A quale casata appartieni?",
+                "answers": [
+                    { "text": "Grifondoro 🦁", "hint": "Coraggiosi e avventurosi, casa di Harry Potter." },
+                    { "text": "Tassorosso 🦡", "hint": "Leali e lavoratori, casa di Cedric Diggory." },
+                    { "text": "Corvonero 🦅", "hint": "Intelligenti e creativi, casa di Luna Lovegood." },
+                    { "text": "Serpeverde 🐍", "hint": "Astuti e ambiziosi, casa di Voldemort." }
+                ]
+            },
+            { 
+                "brand": "Marvel vs DC",
+                "question": "Quale universo preferisci?",
+                "answers": [
+                    { "text": "Marvel 🦸‍♂️", "hint": "Casa di Spider-Man, Iron Man e Avengers!" },
+                    { "text": "DC ⚡", "hint": "Superman, Batman e Wonder Woman ti aspettano!" }
+                ]
+            },
+            { 
+                "brand": "Gaming",
+                "question": "PlayStation o Xbox?",
+                "answers": [
+                    { "text": "PlayStation 🎮", "hint": "Esclusive come God of War, Uncharted e The Last of Us!" },
+                    { "text": "Xbox 🟩", "hint": "Game Pass e Halo sono il tuo pane quotidiano!" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        const quizContainer = document.getElementById("quiz");
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                quizContainer.innerHTML = "<h2 class='fade-in'>✨ Quiz completato! Complimenti! 🎉</h2>";
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            let html = `<div class="question-container fade-in">
+                <h2>${q.question}</h2>
+                <div class="answers">`;
+
+            q.answers.forEach((answer, index) => {
+                html += `
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <button onclick="nextQuestion()">${answer.text}</button>
+                        <button class="hint-btn" onclick="toggleHint(${index})">ℹ️</button>
+                    </div>
+                    <div class="hint" id="hint-${index}">${answer.hint}</div>`;
+            });
+
+            html += `</div></div>`;
+            quizContainer.innerHTML = html;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function toggleHint(index) {
+            const hint = document.getElementById(`hint-${index}`);
+            hint.style.display = (hint.style.display === "block") ? "none" : "block";
+        }
+
+        showQuestion();
+    </script>
+
+</body>
+</html>
