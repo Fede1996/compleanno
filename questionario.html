@@ -106,8 +106,19 @@
 
     <h1>🌙 Quiz Magico ✨</h1>
     <div class="quiz-container">
-        <div id="quiz"></div>
+        <div id="quiz">
+            <div class="fade-in">
+                <h2>Inserisci i tuoi dati per iniziare</h2>
+                <div class="input-container">
+                    <input type="text" id="nome" placeholder="Nome">
+                    <input type="text" id="cognome" placeholder="Cognome">
+                    <input type="email" id="email" placeholder="Email">
+                    <button onclick="startQuiz()">Inizia il Quiz ✨</button>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script>
         const questions = [
