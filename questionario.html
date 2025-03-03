@@ -1,4 +1,66 @@
-[
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Pop Culture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .question-container {
+            margin: 20px auto;
+            padding: 15px;
+            background: #333;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .answers button {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #555;
+            color: white;
+            position: relative;
+        }
+        .answers button:hover {
+            background: #777;
+        }
+        .hint {
+            display: none;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .answers button:hover .hint {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quiz Pop Culture</h1>
+    <div id="quiz"></div>
+
+    <script>
+        const questions = JSON.parse([
     { 
         "brand": "Pokémon",
         "question": "Quale starter di prima generazione scegli?",
@@ -59,3 +121,40 @@
         ]
     }
 ]
+);
+
+        let currentQuestion = 0;
+        const quizContainer = document.getElementById("quiz");
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                quizContainer.innerHTML = "<h2>Quiz completato! 🎉</h2>";
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            let html = `<div class="question-container">
+                <h2>${q.question}</h2>
+                <div class="answers">`;
+
+            q.answers.forEach(answer => {
+                html += `<button onClick="nextQuestion()">
+                    ${answer.text}
+                    <span class="hint">${answer.hint}</span>
+                </button>`;
+            });
+
+            html += `</div></div>`;
+            quizContainer.innerHTML = html;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        showQuestion();
+    </script>
+
+</body>
+</html>
