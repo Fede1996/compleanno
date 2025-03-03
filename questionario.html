@@ -216,8 +216,15 @@
 
             let q = questions[currentQuestion];
             let html = `<h2>${q.question}</h2>`;
+
             q.answers.forEach(answer => {
-                html += `<button onclick="saveAnswer('${answer}')">${answer}</button>`;
+                html += `
+                    <div>
+                        <button onclick="saveAnswer('${answer.text}')">${answer.text}</button>
+                        <button onclick="toggleHint('${answer.text}')" style="background:#444; color:white; margin-left:5px;">?</button>
+                        <div class="hint" id="hint-${answer.text}">${answer.hint}</div>
+                    </div>
+                `;
             });
 
             document.getElementById("quiz").innerHTML = html;
@@ -227,6 +234,11 @@
             answers.push({ question: questions[currentQuestion].question, answer });
             currentQuestion++;
             showQuestion();
+        }
+
+        function toggleHint(answer) {
+            let hint = document.getElementById(`hint-${answer}`);
+            hint.style.display = hint.style.display === "block" ? "none" : "block";
         }
 
         function showDownloadButton() {
