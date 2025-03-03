@@ -189,54 +189,59 @@
             }
         ];
 
+        let userData = {};
         let currentQuestion = 0;
+        let answers = [];
 
         function startQuiz() {
-            const nome = document.getElementById("nome").value;
-            const cognome = document.getElementById("cognome").value;
-            const email = document.getElementById("email").value;
+            userData = {
+                nome: document.getElementById("nome").value,
+                cognome: document.getElementById("cognome").value,
+                email: document.getElementById("email").value
+            };
 
-            if (!nome || !cognome || !email) {
-                alert("Per iniziare, inserisci tutti i dati!");
+            if (!userData.nome || !userData.cognome || !userData.email) {
+                alert("Inserisci tutti i dati!");
                 return;
             }
 
-            userData = { nome, cognome, email };
             showQuestion();
         }
 
         function showQuestion() {
             if (currentQuestion >= questions.length) {
-                document.getElementById("quiz").innerHTML = `<h2 class='fade-in'>✨ Quiz completato! Grazie, ${userData.nome}! 🎉</h2>`;
+                showDownloadButton();
                 return;
             }
 
-            const q = questions[currentQuestion];
-            let html = `<div class="question-container fade-in">
-                <h2>${q.question}</h2>
-                <div class="answers">`;
-
-            q.answers.forEach((answer, index) => {
-                html += `
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <button onclick="nextQuestion()">${answer.text}</button>
-                        <button class="hint-btn" onclick="toggleHint(${index})">ℹ️</button>
-                    </div>
-                    <div class="hint" id="hint-${index}">${answer.hint}</div>`;
+            let q = questions[currentQuestion];
+            let html = `<h2>${q.question}</h2>`;
+            q.answers.forEach(answer => {
+                html += `<button onclick="saveAnswer('${answer}')">${answer}</button>`;
             });
 
-            html += `</div></div>`;
             document.getElementById("quiz").innerHTML = html;
         }
 
-        function nextQuestion() {
+        function saveAnswer(answer) {
+            answers.push({ question: questions[currentQuestion].question, answer });
             currentQuestion++;
             showQuestion();
         }
 
-        function toggleHint(index) {
-            const hint = document.getElementById(`hint-${index}`);
-            hint.style.display = (hint.style.display === "block") ? "none" : "block";
+        function showDownloadButton() {
+            const resultData = { ...userData, answers };
+
+            let jsonData = JSON.stringify(resultData, null, 2);
+            let blob = new Blob([jsonData], { type: "application/json" });
+            let url = URL.createObjectURL(blob);
+
+            document.getElementById("quiz").innerHTML = `
+                <h2>Grazie, ${userData.nome}! 🎉<br>I tuoi risultati sono pronti.</h2>
+                <a href="${url}" download="${userData.email.replace(/[@.]/g, "_")}.json">
+                    <button>📥 Scarica il tuo file</button>
+                </a>
+            `;
         }
     </script>
 
