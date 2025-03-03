@@ -1,150 +1,61 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Cultura Pop</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            width: 80%;
-            max-width: 500px;
-        }
-        h2 {
-            color: #333;
-        }
-        .question {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-        .answer-btn {
-            margin: 10px;
-            padding: 10px 15px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            display: block;
-            width: 100%;
-        }
-        .answer-btn:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            display: none;
-            font-weight: bold;
-            color: #007BFF;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h2>Quiz Cultura Pop</h2>
-        <p>Rispondi alle domande e scopri il tuo profilo!</p>
-
-        <div id="quiz-container">
-            <div class="question" id="question-text"></div>
-            <div id="answers-container"></div>
-        </div>
-
-        <div id="result" class="result"></div>
-    </div>
-
-    <script>
-        const questions = [
-            { 
-                question: "Scegli il tuo Pokémon Starter!", 
-                answers: ["Bulbasaur 🌿", "Charmander 🔥", "Squirtle 🌊"]
-            },
-            { 
-                question: "A quale casata di Harry Potter appartieni?", 
-                answers: ["Grifondoro 🦁", "Tassorosso 🦡", "Corvonero 🦅", "Serpeverde 🐍"]
-            },
-            { 
-                question: "Sei un Jedi o un Sith?", 
-                answers: ["Jedi ⚔️", "Sith 🔥"]
-            },
-            { 
-                question: "Sei Team Cap o Team Iron Man?", 
-                answers: ["Team Cap 🇺🇸", "Team Iron Man 🤖"]
-            },
-            { 
-                question: "Sei Marvel o DC?", 
-                answers: ["Marvel 🦸‍♂️", "DC 🦇"]
-            },
-            { 
-                question: "Preferisci PlayStation o Xbox?", 
-                answers: ["PlayStation 🎮", "Xbox 🕹️"]
-            },
-            { 
-                question: "Meglio Il Signore degli Anelli o Harry Potter?", 
-                answers: ["Il Signore degli Anelli 🏔️", "Harry Potter 🏰"]
-            },
-            { 
-                question: "Game of Thrones o Breaking Bad?", 
-                answers: ["Game of Thrones 🏰", "Breaking Bad 🧪"]
-            },
-            { 
-                question: "Quale starter di prima generazione avresti scelto?", 
-                answers: ["Bulbasaur 🟢", "Charmander 🔴", "Squirtle 🔵"]
-            },
-            { 
-                question: "Meglio Star Wars o Star Trek?", 
-                answers: ["Star Wars 🚀", "Star Trek 🖖"]
-            }
-        ];
-
-        let currentQuestion = 0;
-        let answersSelected = [];
-
-        function showQuestion() {
-            if (currentQuestion < questions.length) {
-                document.getElementById("question-text").innerText = questions[currentQuestion].question;
-                const answersContainer = document.getElementById("answers-container");
-                answersContainer.innerHTML = "";
-                
-                questions[currentQuestion].answers.forEach(answer => {
-                    const button = document.createElement("button");
-                    button.innerText = answer;
-                    button.classList.add("answer-btn");
-                    button.onclick = () => selectAnswer(answer);
-                    answersContainer.appendChild(button);
-                });
-            } else {
-                showResult();
-            }
-        }
-
-        function selectAnswer(answer) {
-            answersSelected.push(answer);
-            currentQuestion++;
-            showQuestion();
-        }
-
-        function showResult() {
-            document.getElementById("quiz-container").style.display = "none";
-            const resultContainer = document.getElementById("result");
-            resultContainer.style.display = "block";
-            resultContainer.innerHTML = `Hai completato il quiz! <br> Le tue risposte: <br> ${answersSelected.join("<br>")}`;
-        }
-
-        // Avvia il quiz mostrando la prima domanda
-        showQuestion();
-    </script>
-
-</body>
-</html>
+[
+    { 
+        "brand": "Pokémon",
+        "question": "Quale starter di prima generazione scegli?",
+        "answers": [
+            { "text": "Bulbasaur 🌿", "hint": "Starter di tipo Erba/Veleno, perfetto per le prime palestre." },
+            { "text": "Charmander 🔥", "hint": "Starter di tipo Fuoco che diventa il potente Charizard." },
+            { "text": "Squirtle 🌊", "hint": "Starter di tipo Acqua, evolve in Blastoise con cannoni d'acqua." }
+        ]
+    },
+    { 
+        "brand": "Harry Potter",
+        "question": "A quale casata appartieni?",
+        "answers": [
+            { "text": "Grifondoro 🦁", "hint": "Coraggiosi e avventurosi, casa di Harry Potter." },
+            { "text": "Tassorosso 🦡", "hint": "Leali e lavoratori, casa di Cedric Diggory." },
+            { "text": "Corvonero 🦅", "hint": "Intelligenti e creativi, casa di Luna Lovegood." },
+            { "text": "Serpeverde 🐍", "hint": "Astuti e ambiziosi, casa di Voldemort." }
+        ]
+    },
+    { 
+        "brand": "Star Wars",
+        "question": "Sei un Jedi o un Sith?",
+        "answers": [
+            { "text": "Jedi ⚔️", "hint": "Guerrieri della luce, seguono la Forza per la pace." },
+            { "text": "Sith 🔥", "hint": "Seguono il lato oscuro della Forza, potenti e spietati." }
+        ]
+    },
+    { 
+        "brand": "Marvel vs DC",
+        "question": "Preferisci Marvel o DC?",
+        "answers": [
+            { "text": "Marvel 🦸‍♂️", "hint": "Casa di Spider-Man, Iron Man e Avengers." },
+            { "text": "DC 🦇", "hint": "Casa di Batman, Superman e Justice League." }
+        ]
+    },
+    { 
+        "brand": "Game of Thrones",
+        "question": "Quale casata di Westeros preferisci?",
+        "answers": [
+            { "text": "Stark 🐺", "hint": "Onorevoli e leali, governano il Nord." },
+            { "text": "Lannister 🦁", "hint": "Ricchi e potenti, 'Un Lannister paga sempre i suoi debiti'." },
+            { "text": "Targaryen 🐉", "hint": "Discendenti dei draghi, vogliono il Trono di Spade." },
+            { "text": "Baratheon 🦌", "hint": "Guerrieri forti e tenaci, casa di Re Robert." },
+            { "text": "Greyjoy 🦑", "hint": "Pirati delle Isole di Ferro, 'Ciò che è morto non muoia mai'." },
+            { "text": "Martell 🏜️", "hint": "Provenienti dal deserto di Dorne, non si sottomettono mai." },
+            { "text": "Tyrell 🌹", "hint": "Ricchi e influenti, 'Crescere Forti'." },
+            { "text": "Tully 🐟", "hint": "Governano le Terre dei Fiumi, 'Famiglia, Dovere, Onore'." },
+            { "text": "Arryn 🦅", "hint": "Protettori della Valle, 'Alto come l’Onore'." },
+            { "text": "Bolton ❄️", "hint": "Famosi per la crudeltà, governano Forte Terrore." }
+        ]
+    },
+    { 
+        "brand": "PlayStation vs Xbox",
+        "question": "PlayStation o Xbox?",
+        "answers": [
+            { "text": "PlayStation 🎮", "hint": "Casa di esclusive come God of War, The Last of Us." },
+            { "text": "Xbox 🕹️", "hint": "Famosa per Halo, Gears of War e Game Pass." }
+        ]
+    }
+]
