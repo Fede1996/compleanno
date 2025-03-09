@@ -258,7 +258,7 @@
             let url = URL.createObjectURL(blob);
 
             document.getElementById("quiz").innerHTML = `
-                <h2>Grazie, ${userData.nome}! 🎉<br>I tuoi risultati sono pronti.</h2>
+                <h2>Grazie, ${userData.nome} ${userData.cognome}! 🎉<br>I tuoi risultati sono pronti.</h2>
                 <button id="downloadTicket" onclick="generateTicket()">Scarica il Biglietto di Invito 🎉</button>
             `;
         }
