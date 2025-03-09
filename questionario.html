@@ -263,6 +263,23 @@
             `;
         }
 
+        async function getBase64Image(url, format) {
+            const img = new Image();
+            img.crossOrigin = "Anonymous"; // Evita problemi di CORS con immagini online
+        
+            return new Promise((resolve) => {
+                img.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL(`image/${format}`));
+                };
+                img.src = url;
+            });
+        }
+
         // Funzione per creare il biglietto di invito in PDF
         function generateTicket() {
             const { jsPDF } = window.jspdf; // Inizializza jsPDF
@@ -273,7 +290,9 @@
             // Aggiungi un titolo
             //doc.setFontSize(20);
             //doc.text("Invito al Compleanno di Federico", 20, 20);
-
+            const webpBase64 = await getBase64Image('DALL·E 2025-03-09 12.49.26 - A magical birthday celebration scene with glowing candles, floating sparkles, a mystical parchment scroll, and a dreamy enchanted atmosphere. The word.webp');
+            doc.addImage(webpBase64, "WEBP", 10, 10, 180, 50); // Regola posizione e dimensioni
+            
             // Aggiungi il nome dell'utente e altre info
             doc.setFontSize(16);
             doc.text(`Nome: ${userData.nome}`, 20, 40);
