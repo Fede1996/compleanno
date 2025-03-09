@@ -304,11 +304,23 @@
                     doc.text("Risposte al quiz:", 20, 100);
                     doc.setFontSize(12);
 
+                    images_dict = {
+                        "Grifondoro": "Gryffindor.webp",
+                        "Tassorosso": "Hufflepuff.webp",
+                        "Corvonero": "Ravenclaw.webp",
+                        "Serpeverde": "Slytherin.webp"
+                    }
+
                     let yPosition = 110;
                     answers.forEach(answer => {
                         doc.text(`${answer.question} - ${answer.answer}`, 20, yPosition);
                         yPosition += 10;
                     });
+
+                    // Aggiungi testo
+                    doc.setFontSize(12);
+                    // Aggiungi le risposte al quiz
+                    doc.text("Quest:", 20, 100);
 
                     // Messaggio finale
                     doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition + 10);
