@@ -362,8 +362,8 @@
 
                     let yPosition = 100;
                     answers.forEach(answer => {
-                        console(answer.answer);
-                        console(answer.answer in images_dict);
+                        console.log(answer.answer);
+                        console.log(answer.answer in images_dict);
                         if (answer.answer in images_dict) {
                             getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
                                 .then(function (imgBase64) {
