@@ -379,6 +379,7 @@
                                 .catch(function (error) {
                                     console.error(`Errore nel caricamento dell'immagine: ${images_dict[answer.answer]["FILE"]}`, error);
                                 });
+                            imagePromises.push(promise);
                         } else {
                             doc.text(answer.answer, 20, yPosition);
                             yPosition += 10; // Sposta verso il basso per la prossima riga di testo
