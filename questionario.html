@@ -301,8 +301,10 @@
                     doc.setFontSize(16);
                     doc.text(`Nome: ${userData.nome} Cognome: ${userData.cognome}`, 20, 70);
 
+                    doc.text(`Luogo: Wistery (Corso Regina Margherita 304, 10143 Torino, Italia). Ore: 20:00`, 20, 100);
+
                     // Aggiungi le risposte al quiz
-                    doc.text("Risposte al quiz:", 20, 100);
+                    doc.text("Risposte al quiz:", 20, 130);
                     doc.setFontSize(12);
 
                     images_dict = {
@@ -364,13 +366,13 @@
                         }
                     }
 
-                    let yPosition = 110;
+                    let yPosition = 140;
                     let xPosition = 20;
                     let maxWidth = 180;  // Larghezza massima del PDF
                     let imgSize = 30;     // Dimensione di ogni immagine
                     let spacing = 10;     // Spazio tra le immagini
                     let imagePromises = [];
-                        
+
                     answers.forEach(answer => {
                         if (answer.answer in images_dict) {
                             let promise = getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
