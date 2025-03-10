@@ -290,17 +290,17 @@
         function generateTicket() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-                
+
             // Aggiungi testo principale
             doc.setFontSize(16);
             doc.text(`Nome: ${userData.nome} Cognome: ${userData.cognome}`, 20, 20);
             doc.text(`Luogo: Wistery (Corso Regina Margherita 304, 10143 Torino, Italia).`, 20, 40);
             doc.text(`Data: 15/03/1996 Ora inizio: 20:00 Ora fine: 24:00`, 20, 60);
-                
+
             // Aggiungi le risposte al quiz
             doc.text("Risposte al quiz:", 20, 80);
             doc.setFontSize(12);
-                
+
             images_dict = {
                 "Grifondoro": { "FILE": "Gryffindor.webp", "FORMAT": "WEBP" },
                 "Tassorosso": { "FILE": "Hufflepuff.webp", "FORMAT": "WEBP" },
@@ -375,14 +375,14 @@
             // Aggiungi la frase del gioco
             yPosition1 += 20;
             doc.setFontSize(14);
-            doc.text("🎉 Gioco del Simbolo Segreto 🎉", 20, yPosition1);
+            doc.text("Gioco del Simbolo Segreto", 20, yPosition1);
             yPosition1 += 10;
             doc.setFontSize(12);
-            doc.text("🔎 Vinci un premio se trovi i simboli nei biglietti degli altri partecipanti!", 20, yPosition1);
+            doc.text("Vinci un premio se trovi i simboli nei biglietti degli altri partecipanti!", 20, yPosition1);
             yPosition1 += 8;
-            doc.text("⚠️ Attenzione: devi trovarli tutti e il premio è uno solo!", 20, yPosition1);
+            doc.text("Attenzione: devi trovarli tutti e il premio è uno solo!", 20, yPosition1);
             yPosition1 += 8;
-            doc.text("🏆 Vince il più veloce!", 20, yPosition1);
+            doc.text("Vince il più veloce!", 20, yPosition1);
             yPosition1 += 20;
         
             answers.forEach(answer => {
@@ -413,8 +413,6 @@
             });
         
             Promise.all(imagePromises).then(() => {
-                yPosition1 += imgSize + spacing;
-                doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition1);
                 doc.save(`biglietto_invito_${userData.nome}.pdf`);
             })
             .catch(function (error) {
