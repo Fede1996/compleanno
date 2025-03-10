@@ -305,15 +305,44 @@
                     doc.setFontSize(12);
 
                     images_dict = {
-                        "Grifondoro": "Gryffindor.webp",
-                        "Tassorosso": "Hufflepuff.webp",
-                        "Corvonero": "Ravenclaw.webp",
-                        "Serpeverde": "Slytherin.webp"
+                        "Grifondoro": {
+                            "FILE": "Gryffindor.webp",
+                            "FORMAT": "WEBP"
+                        },
+                        "Tassorosso": {
+                            "FILE": "Hufflepuff.webp",
+                            "FORMAT": "WEBP"
+                        },
+                        "Corvonero": {
+                            "FILE": "Ravenclaw.webp",
+                            "FORMAT": "WEBP"
+                        },
+                        "Serpeverde": {
+                            "FILE": "Slytherin.webp",
+                            "FORMAT": "WEBP"
+                        },
+                        "Bulbasaur": {
+                            "FILE": "Bulbasaur.png",
+                            "FORMAT": "PNG"
+                        },
+                        "Squirtle": {
+                            "FILE": "Squirtle.png",
+                            "FORMAT": "PNG"
+                        },
+                        "Jedi": {
+                            "FILE": "jedi.jpg",
+                            "FORMAT": "JPG"
+                        },
+                        "Sith": {
+                            "FILE": "sith.jpg",
+                            "FORMAT": "JPG"
+                        }
                     }
 
                     let yPosition = 110;
                     answers.forEach(answer => {
-                        doc.text(`${answer.question} - ${answer.answer}`, 20, yPosition);
+                        doc.addImage(images_dict[answer]["FILE"],images_dict[answer]["FORMAT"],10,10,10,10);
+                        //doc.text(`${answer.question} - ${answer.answer}`, 20, yPosition);
                         yPosition += 10;
                     });
 
