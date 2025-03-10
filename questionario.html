@@ -494,7 +494,7 @@
                 
                     // Attendere che tutte le immagini siano caricate prima di salvare il PDF
                     Promise.all(imagePromises).then(() => {
-                        yPosition1 += imgSize + spacing;
+                        yPosition += imgSize + spacing;
                         doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition1);
                         doc.save(`biglietto_invito_${userData.nome}.pdf`);
                     });
