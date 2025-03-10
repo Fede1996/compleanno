@@ -383,16 +383,12 @@
                         }
                     });
 
-                    // Aggiungi testo
-                    doc.setFontSize(12);
-                    // Aggiungi le risposte al quiz
-                    doc.text("Quest:", yPosition, 100);
+                    // Attendere che tutte le immagini siano caricate prima di salvare il PDF
+                    Promise.all(imagePromises).then(() => {
+                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition + 10);
+                        doc.save(`biglietto_invito_${userData.nome}.pdf`);
+                    });
 
-                    // Messaggio finale
-                    doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition + 10);
-
-                    // Salva il PDF
-                    doc.save(`biglietto_invito_${userData.nome}.pdf`);
                 })
                 .catch(function (error) {
                     console.error("Errore:", error);
