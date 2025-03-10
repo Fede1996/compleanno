@@ -290,221 +290,139 @@
         function generateTicket() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-
-            // Carica l'immagine e genera il PDF
-            getBase64Image("birthday.webp", "webp")
-                .then(function (webpBase64) {
-                    // Aggiungi l'immagine
-                    doc.addImage(webpBase64, "WEBP", 10, 10, 180, 50);
-
-                    // Aggiungi testo
-                    doc.setFontSize(16);
-                    doc.text(`Nome: ${userData.nome} Cognome: ${userData.cognome}`, 20, 70);
-
-                    doc.text(`Luogo: Wistery (Corso Regina Margherita 304, 10143 Torino, Italia).`, 20, 90);
-                    doc.text(`Data: 15/03/1996 Ora inizio: 20:00 Ora fine: 24:00`, 20, 110);
-
-                    // Aggiungi le risposte al quiz
-                    doc.text("Risposte al quiz:", 20, 130);
-                    doc.setFontSize(12);
-
-                    images_dict = {
-                        "Grifondoro": {
-                            "FILE": "Gryffindor.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Tassorosso": {
-                            "FILE": "Hufflepuff.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Corvonero": {
-                            "FILE": "Ravenclaw.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Serpeverde": {
-                            "FILE": "Slytherin.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Bulbasaur": {
-                            "FILE": "Bulbasaur.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Charmander": {
-                            "FILE": "Charmander.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Squirtle": {
-                            "FILE": "Squirtle.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Jedi": {
-                            "FILE": "jedi.jpg",
-                            "FORMAT": "JPG"
-                        },
-                        "Sith": {
-                            "FILE": "sith.jpg",
-                            "FORMAT": "JPG"
-                        },
-                        "Marvel": {
-                            "FILE": "avengers.png",
-                            "FORMAT": "PNG"
-                        },
-                        "DC": {
-                            "FILE": "justice-league.png",
-                            "FORMAT": "PNG"
-                        },
-                        "PlayStation": {
-                            "FILE": "ps.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Xbox": {
-                            "FILE": "xbox.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Nintendo": {
-                            "FILE": "nintendo.png",
-                            "FORMAT": "PNG"
-                        }
-                    }
-
-                    images1_dict = {
-                        "Grifondoro": {
-                            "FILE": "Hufflepuff.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Tassorosso": {
-                            "FILE": "Gryffindor.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Corvonero": {
-                            "FILE": "Slytherin.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Serpeverde": {
-                            "FILE": "Ravenclaw.webp",
-                            "FORMAT": "WEBP"
-                        },
-                        "Bulbasaur": {
-                            "FILE": "Squirtle.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Charmander": {
-                            "FILE": "Bulbasaur.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Squirtle": {
-                            "FILE": "Charmander.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Jedi": {
-                            "FILE": "sith.jpg",
-                            "FORMAT": "JPG"
-                        },
-                        "Sith": {
-                            "FILE": "jedi.jpg",
-                            "FORMAT": "JPG"
-                        },
-                        "Marvel": {
-                            "FILE": "justice-league.png",
-                            "FORMAT": "PNG"
-                        },
-                        "DC": {
-                            "FILE": "avengers.png",
-                            "FORMAT": "PNG"
-                        },
-                        "PlayStation": {
-                            "FILE": "nintendo.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Xbox": {
-                            "FILE": "ps.png",
-                            "FORMAT": "PNG"
-                        },
-                        "Nintendo": {
-                            "FILE": "xbox.png",
-                            "FORMAT": "PNG"
-                        }
-                    }
-
-                    let yPosition = 140;
-                    let xPosition = 20;
-                    let maxWidth = 180;  // Larghezza massima del PDF
-                    let imgSize = 30;     // Dimensione di ogni immagine
-                    let spacing = 10;     // Spazio tra le immagini
-                    let imagePromises = [];
-
-                    answers.forEach(answer => {
-                        if (answer.answer in images_dict) {
-                            let promise = getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
-                                .then(function (imgBase64) {
-                                    doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], xPosition, yPosition, imgSize, imgSize);
-                                    xPosition += imgSize + spacing; // Sposta X a destra
-                                
-                                    // Se la prossima immagine andrebbe fuori margine, vai a capo
-                                    if (xPosition + imgSize > maxWidth) {
-                                        xPosition = 20; // Reset X
-                                        yPosition += imgSize + spacing; // Sposta Y giù
-                                    }
-                                })
-                                .catch(function (error) {
-                                    console.error(`Errore nel caricamento dell'immagine: ${images_dict[answer.answer]["FILE"]}`, error);
-                                });
-                            imagePromises.push(promise);
-                        } else {
-                            doc.text(answer.answer, xPosition, yPosition + imgSize / 2); // Aggiungi testo in linea
-                            xPosition += imgSize + spacing;
+                
+            // Aggiungi testo principale
+            doc.setFontSize(16);
+            doc.text(`Nome: ${userData.nome} Cognome: ${userData.cognome}`, 20, 20);
+            doc.text(`Luogo: Wistery (Corso Regina Margherita 304, 10143 Torino, Italia).`, 20, 40);
+            doc.text(`Data: 15/03/1996 Ora inizio: 20:00 Ora fine: 24:00`, 20, 60);
+                
+            // Aggiungi le risposte al quiz
+            doc.text("Risposte al quiz:", 20, 80);
+            doc.setFontSize(12);
+                
+            images_dict = {
+                "Grifondoro": { "FILE": "Gryffindor.webp", "FORMAT": "WEBP" },
+                "Tassorosso": { "FILE": "Hufflepuff.webp", "FORMAT": "WEBP" },
+                "Corvonero": { "FILE": "Ravenclaw.webp", "FORMAT": "WEBP" },
+                "Serpeverde": { "FILE": "Slytherin.webp", "FORMAT": "WEBP" },
+                "Bulbasaur": { "FILE": "Bulbasaur.png", "FORMAT": "PNG" },
+                "Charmander": { "FILE": "Charmander.png", "FORMAT": "PNG" },
+                "Squirtle": { "FILE": "Squirtle.png", "FORMAT": "PNG" },
+                "Jedi": { "FILE": "jedi.jpg", "FORMAT": "JPG" },
+                "Sith": { "FILE": "sith.jpg", "FORMAT": "JPG" },
+                "Marvel": { "FILE": "avengers.png", "FORMAT": "PNG" },
+                "DC": { "FILE": "justice-league.png", "FORMAT": "PNG" },
+                "PlayStation": { "FILE": "ps.png", "FORMAT": "PNG" },
+                "Xbox": { "FILE": "xbox.png", "FORMAT": "PNG" },
+                "Nintendo": { "FILE": "nintendo.png", "FORMAT": "PNG" }
+            };
+        
+            images1_dict = {
+                "Grifondoro": { "FILE": "Hufflepuff.webp", "FORMAT": "WEBP" },
+                "Tassorosso": { "FILE": "Gryffindor.webp", "FORMAT": "WEBP" },
+                "Corvonero": { "FILE": "Slytherin.webp", "FORMAT": "WEBP" },
+                "Serpeverde": { "FILE": "Ravenclaw.webp", "FORMAT": "WEBP" },
+                "Bulbasaur": { "FILE": "Squirtle.png", "FORMAT": "PNG" },
+                "Charmander": { "FILE": "Bulbasaur.png", "FORMAT": "PNG" },
+                "Squirtle": { "FILE": "Charmander.png", "FORMAT": "PNG" },
+                "Jedi": { "FILE": "sith.jpg", "FORMAT": "JPG" },
+                "Sith": { "FILE": "jedi.jpg", "FORMAT": "JPG" },
+                "Marvel": { "FILE": "justice-league.png", "FORMAT": "PNG" },
+                "DC": { "FILE": "avengers.png", "FORMAT": "PNG" },
+                "PlayStation": { "FILE": "nintendo.png", "FORMAT": "PNG" },
+                "Xbox": { "FILE": "ps.png", "FORMAT": "PNG" },
+                "Nintendo": { "FILE": "xbox.png", "FORMAT": "PNG" }
+            };
+        
+            let yPosition = 90;
+            let xPosition = 20;
+            let maxWidth = 180;  
+            let imgSize = 30;     
+            let spacing = 10;     
+            let imagePromises = [];
+        
+            answers.forEach(answer => {
+                if (answer.answer in images_dict) {
+                    let promise = getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
+                        .then(function (imgBase64) {
+                            doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], xPosition, yPosition, imgSize, imgSize);
+                            xPosition += imgSize + spacing; 
                         
                             if (xPosition + imgSize > maxWidth) {
-                                xPosition = 20;
-                                yPosition += imgSize + spacing;
+                                xPosition = 20; 
+                                yPosition += imgSize + spacing; 
                             }
-                        }
-                    });
-
-                    let yPosition1 = 220;
-                    let xPosition1 = 20;
-
-                    answers.forEach(answer => {
-                        if (answer.answer in images1_dict) {
-                            let promise = getBase64Image(images1_dict[answer.answer]["FILE"], images1_dict[answer.answer]["FORMAT"])
-                                .then(function (imgBase64) {
-                                    doc.addImage(imgBase64, images1_dict[answer.answer]["FORMAT"], xPosition1, yPosition1, imgSize, imgSize);
-                                    xPosition1 += imgSize + spacing; // Sposta X a destra
-                                
-                                    // Se la prossima immagine andrebbe fuori margine, vai a capo
-                                    if (xPosition1 + imgSize > maxWidth) {
-                                        xPosition1 = 20; // Reset X
-                                        yPosition1 += imgSize + spacing; // Sposta Y giù
-                                    }
-                                })
-                                .catch(function (error) {
-                                    console.error(`Errore nel caricamento dell'immagine: ${images1_dict[answer.answer]["FILE"]}`, error);
-                                });
-                            imagePromises.push(promise);
-                        } else {
-                            doc.text(answer.answer, xPosition1, yPosition1 + imgSize / 2); // Aggiungi testo in linea
-                            xPosition1 += imgSize + spacing;
+                        })
+                        .catch(function (error) {
+                            console.error(`Errore nel caricamento dell'immagine: ${images_dict[answer.answer]["FILE"]}`, error);
+                        });
+                    imagePromises.push(promise);
+                } else {
+                    doc.text(answer.answer, xPosition, yPosition + imgSize / 2); 
+                    xPosition += imgSize + spacing;
+                
+                    if (xPosition + imgSize > maxWidth) {
+                        xPosition = 20;
+                        yPosition += imgSize + spacing;
+                    }
+                }
+            });
+        
+            let yPosition1 = yPosition + imgSize + spacing;
+            let xPosition1 = 20;
+        
+            // Aggiungi la frase del gioco
+            yPosition1 += 20;
+            doc.setFontSize(14);
+            doc.text("🎉 Gioco del Simbolo Segreto 🎉", 20, yPosition1);
+            yPosition1 += 10;
+            doc.setFontSize(12);
+            doc.text("🔎 Vinci un premio se trovi i simboli nei biglietti degli altri partecipanti!", 20, yPosition1);
+            yPosition1 += 8;
+            doc.text("⚠️ Attenzione: devi trovarli tutti e il premio è uno solo!", 20, yPosition1);
+            yPosition1 += 8;
+            doc.text("🏆 Vince il più veloce!", 20, yPosition1);
+            yPosition1 += 20;
+        
+            answers.forEach(answer => {
+                if (answer.answer in images1_dict) {
+                    let promise = getBase64Image(images1_dict[answer.answer]["FILE"], images1_dict[answer.answer]["FORMAT"])
+                        .then(function (imgBase64) {
+                            doc.addImage(imgBase64, images1_dict[answer.answer]["FORMAT"], xPosition1, yPosition1, imgSize, imgSize);
+                            xPosition1 += imgSize + spacing; 
                         
                             if (xPosition1 + imgSize > maxWidth) {
-                                xPosition1 = 20;
-                                yPosition1 += imgSize + spacing;
+                                xPosition1 = 20; 
+                                yPosition1 += imgSize + spacing; 
                             }
-                        }
-                    });
+                        })
+                        .catch(function (error) {
+                            console.error(`Errore nel caricamento dell'immagine: ${images1_dict[answer.answer]["FILE"]}`, error);
+                        });
+                    imagePromises.push(promise);
+                } else {
+                    doc.text(answer.answer, xPosition1, yPosition1 + imgSize / 2); 
+                    xPosition1 += imgSize + spacing;
                 
-                    // Attendere che tutte le immagini siano caricate prima di salvare il PDF
-                    Promise.all(imagePromises).then(() => {
-                        yPosition += imgSize + spacing;
-                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition1);
-                        doc.save(`biglietto_invito_${userData.nome}.pdf`);
-                    });
-
-                })
-                .catch(function (error) {
-                    console.error("Errore:", error);
-                    alert("Si è verificato un errore durante la generazione del PDF.");
-                });
+                    if (xPosition1 + imgSize > maxWidth) {
+                        xPosition1 = 20;
+                        yPosition1 += imgSize + spacing;
+                    }
+                }
+            });
+        
+            Promise.all(imagePromises).then(() => {
+                yPosition1 += imgSize + spacing;
+                doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition1);
+                doc.save(`biglietto_invito_${userData.nome}.pdf`);
+            })
+            .catch(function (error) {
+                console.error("Errore:", error);
+                alert("Si è verificato un errore durante la generazione del PDF.");
+            });
         }
+
 
 
     </script>
