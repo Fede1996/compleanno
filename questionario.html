@@ -362,6 +362,7 @@
 
                     let yPosition = 100;
                     answers.forEach(answer => {
+                        console.log(answer);
                         if (images_dict[answer]) {
                             getBase64Image(images_dict[answer]["FILE"], images_dict[answer]["FORMAT"])
                                 .then(function (imgBase64) {
