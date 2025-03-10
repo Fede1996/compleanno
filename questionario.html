@@ -366,31 +366,43 @@
 
                     let yPosition = 110;
                     let xPosition = 20;
+                    let maxWidth = 180;  // Larghezza massima del PDF
+                    let imgSize = 30;     // Dimensione di ogni immagine
+                    let spacing = 10;     // Spazio tra le immagini
                     let imagePromises = [];
-
+                        
                     answers.forEach(answer => {
-                        console.log(answer.answer);
-                        console.log(answer.answer in images_dict);
                         if (answer.answer in images_dict) {
                             let promise = getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
                                 .then(function (imgBase64) {
-                                    doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], yPosition, xPosition, 30, 30);
-                                    xPosition += 40; // Sposta verso il basso per la prossima immagine
+                                    doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], xPosition, yPosition, imgSize, imgSize);
+                                    xPosition += imgSize + spacing; // Sposta X a destra
+                                
+                                    // Se la prossima immagine andrebbe fuori margine, vai a capo
+                                    if (xPosition + imgSize > maxWidth) {
+                                        xPosition = 20; // Reset X
+                                        yPosition += imgSize + spacing; // Sposta Y giù
+                                    }
                                 })
                                 .catch(function (error) {
                                     console.error(`Errore nel caricamento dell'immagine: ${images_dict[answer.answer]["FILE"]}`, error);
                                 });
                             imagePromises.push(promise);
                         } else {
-                            doc.text(answer.answer, yPosition, xPosition);
-                            yPosition += 10; // Sposta verso il basso per la prossima riga di testo
-                            xPosition = 20;
+                            doc.text(answer.answer, xPosition, yPosition + imgSize / 2); // Aggiungi testo in linea
+                            xPosition += imgSize + spacing;
+                        
+                            if (xPosition + imgSize > maxWidth) {
+                                xPosition = 20;
+                                yPosition += imgSize + spacing;
+                            }
                         }
                     });
-
+                
                     // Attendere che tutte le immagini siano caricate prima di salvare il PDF
                     Promise.all(imagePromises).then(() => {
-                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition + 10);
+                        yPosition += imgSize + spacing;
+                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition);
                         doc.save(`biglietto_invito_${userData.nome}.pdf`);
                     });
 
