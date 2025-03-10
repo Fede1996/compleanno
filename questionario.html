@@ -382,7 +382,7 @@
                                 });
                             imagePromises.push(promise);
                         } else {
-                            doc.text(answer.answer, 20, yPosition);
+                            doc.text(answer.answer, yPosition, xPosition);
                             yPosition += 10; // Sposta verso il basso per la prossima riga di testo
                             xPosition = 20;
                         }
