@@ -461,20 +461,20 @@
                         }
                     });
 
-                    yPosition = 220;
-                    xPosition = 20;
+                    let yPosition1 = 220;
+                    let xPosition1 = 20;
 
                     answers.forEach(answer => {
                         if (answer.answer in images1_dict) {
                             let promise = getBase64Image(images1_dict[answer.answer]["FILE"], images1_dict[answer.answer]["FORMAT"])
                                 .then(function (imgBase64) {
-                                    doc.addImage(imgBase64, images1_dict[answer.answer]["FORMAT"], xPosition, yPosition, imgSize, imgSize);
-                                    xPosition += imgSize + spacing; // Sposta X a destra
+                                    doc.addImage(imgBase64, images1_dict[answer.answer]["FORMAT"], xPosition1, yPosition1, imgSize, imgSize);
+                                    xPosition1 += imgSize + spacing; // Sposta X a destra
                                 
                                     // Se la prossima immagine andrebbe fuori margine, vai a capo
-                                    if (xPosition + imgSize > maxWidth) {
-                                        xPosition = 20; // Reset X
-                                        yPosition += imgSize + spacing; // Sposta Y giù
+                                    if (xPosition1 + imgSize > maxWidth) {
+                                        xPosition1 = 20; // Reset X
+                                        yPosition1 += imgSize + spacing; // Sposta Y giù
                                     }
                                 })
                                 .catch(function (error) {
@@ -482,20 +482,20 @@
                                 });
                             imagePromises.push(promise);
                         } else {
-                            doc.text(answer.answer, xPosition, yPosition + imgSize / 2); // Aggiungi testo in linea
-                            xPosition += imgSize + spacing;
+                            doc.text(answer.answer, xPosition1, yPosition1 + imgSize / 2); // Aggiungi testo in linea
+                            xPosition1 += imgSize + spacing;
                         
-                            if (xPosition + imgSize > maxWidth) {
-                                xPosition = 20;
-                                yPosition += imgSize + spacing;
+                            if (xPosition1 + imgSize > maxWidth) {
+                                xPosition1 = 20;
+                                yPosition1 += imgSize + spacing;
                             }
                         }
                     });
                 
                     // Attendere che tutte le immagini siano caricate prima di salvare il PDF
                     Promise.all(imagePromises).then(() => {
-                        yPosition += imgSize + spacing;
-                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition);
+                        yPosition1 += imgSize + spacing;
+                        doc.text("Non vediamo l'ora di festeggiare con te!", 20, yPosition1);
                         doc.save(`biglietto_invito_${userData.nome}.pdf`);
                     });
 
