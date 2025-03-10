@@ -360,11 +360,21 @@
                         }
                     }
 
-                    let yPosition = 110;
+                    let yPosition = 100;
                     answers.forEach(answer => {
-                        doc.addImage(images_dict[answer]["FILE"],images_dict[answer]["FORMAT"],10,10,10,10);
-                        //doc.text(`${answer.question} - ${answer.answer}`, 20, yPosition);
-                        yPosition += 10;
+                        if (images_dict[answer]) {
+                            getBase64Image(images_dict[answer]["FILE"], images_dict[answer]["FORMAT"])
+                                .then(function (imgBase64) {
+                                    doc.addImage(imgBase64, images_dict[answer]["FORMAT"], 20, yPosition, 30, 30);
+                                    yPosition += 40; // Sposta verso il basso per la prossima immagine
+                                })
+                                .catch(function (error) {
+                                    console.error(`Errore nel caricamento dell'immagine: ${images_dict[answer]["FILE"]}`, error);
+                                });
+                        } else {
+                            doc.text(answer, 20, yPosition);
+                            yPosition += 10; // Sposta verso il basso per la prossima riga di testo
+                        }
                     });
 
                     // Aggiungi testo
