@@ -362,7 +362,7 @@
 
                     let yPosition = 100;
                     answers.forEach(answer => {
-                        if (images_dict[answer.answer]) {
+                        if (answer.answer in images_dict) {
                             getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
                                 .then(function (imgBase64) {
                                     doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], 20, yPosition, 30, 30);
