@@ -374,7 +374,7 @@
                         if (answer.answer in images_dict) {
                             let promise = getBase64Image(images_dict[answer.answer]["FILE"], images_dict[answer.answer]["FORMAT"])
                                 .then(function (imgBase64) {
-                                    doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], 20, xPosition, 30, 30);
+                                    doc.addImage(imgBase64, images_dict[answer.answer]["FORMAT"], yPosition, xPosition, 30, 30);
                                     xPosition += 40; // Sposta verso il basso per la prossima immagine
                                 })
                                 .catch(function (error) {
